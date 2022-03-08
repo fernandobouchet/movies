@@ -26,9 +26,8 @@ function Main() {
 export default Main;
 
 const CardsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 15rem);
   justify-content: center;
-  align-items: center;
-  margin: 5rem 0;
+  margin: 5rem 1rem;
 `;
