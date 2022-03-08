@@ -4,7 +4,7 @@ import Cards from "../Cards/Cards";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 
-function Main() {
+function Home() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Main() {
   return <CardsContainer>{Movies}</CardsContainer>;
 }
 
-export default Main;
+export default Home;
 
 const CardsContainer = styled.div`
   display: grid;
