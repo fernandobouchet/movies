@@ -16,7 +16,7 @@ export default Home;
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 15rem);
+  grid-template-columns: repeat(4, 20rem);
   justify-content: center;
   margin: 5rem 1rem;
 `;

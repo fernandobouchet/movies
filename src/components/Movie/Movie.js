@@ -35,15 +35,17 @@ const MovieContainer = styled.div`
 `;
 
 const CardImage = styled.img`
-  width: 10rem;
+  width: 25rem;
   height: auto;
   border-radius: 0.5rem;
 `;
 
 const MovieTitle = styled.h1`
+  font-size: 5rem;
   color: white;
 `;
 
 const MovieOverview = styled.p`
+  font-size: 2rem;
   color: white;
 `;
