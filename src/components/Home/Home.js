@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
-import loadMovies from "../../Utils/Axios";
 import Cards from "../Cards/Cards";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 
-function Home() {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const movies = await loadMovies();
-      setMovies(movies);
-    })();
-  }, []);
+function Home(props) {
+  const { movies } = props;
 
   const Movies = movies.map((movie) => {
-    return (
-      <Cards key={nanoid()} title={movie.title} image={movie.poster_path} />
-    );
+    return <Cards key={nanoid()} movie={movie} />;
   });
 
   return <CardsContainer>{Movies}</CardsContainer>;
