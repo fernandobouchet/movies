@@ -66,19 +66,24 @@ const Pagination = styled(ReactPaginate)`
   cursor: pointer;
   list-style-type: none;
 
+  .active > .page-link {
+    background-color: black;
+    border-style: solid;
+  }
+
   .page-link {
     font-family: inherit;
     font-size: 1.3rem;
-    background-color: #242424;
     padding: 1rem;
+    background-color: #242424;
+  }
 
-    &:hover {
-      opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.8;
+  }
 
-    @media (max-width: 480px) {
-      font-size: 1rem;
-      padding: 0.5rem;
-    }
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 0.5rem;
   }
 `;
