@@ -75,6 +75,12 @@ const MovieContainer = styled.div`
 const Container = styled.div`
   display: flex;
   width: 60%;
+
+  @media (max-width: 480px) {
+    font-size: 3rem;
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 const MovieCard = styled.div`
@@ -82,7 +88,7 @@ const MovieCard = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 1000px;
-  height: auto;
+  height: 450px;
   padding: 5rem 5rem;
   border-radius: 10px;
   background-image: linear-gradient(to top, black, transparent),
@@ -102,8 +108,7 @@ const MovieImgOver = styled.div`
 const CardImage = styled.img`
   width: 200px;
   height: auto;
-
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 10px;
 `;
 
@@ -111,12 +116,15 @@ const MovieTitle = styled.h1`
   font-size: 5rem;
   color: white;
   margin: 1rem;
+
+  @media (max-width: 480px) {
+    font-size: 3rem;
+  }
 `;
 
 const MovieOverview = styled.p`
   margin: 0;
-  margin-top: 4rem;
-  padding: 2rem;
+  padding: 1rem;
   font-size: 1.5rem;
   font-weight: 400;
   color: white;
@@ -133,6 +141,12 @@ const Video = styled.iframe`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: 480px) {
+    width: 90%;
+    height: 71%;
+    allowfullscreen: true;
+  }
 `;
 
 const TrailerButton = styled.button`
