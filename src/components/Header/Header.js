@@ -15,6 +15,8 @@ export default Header;
 
 const StyledHeader = styled.header`
   position: fixed;
+  overflow: hidden;
+
   background-color: #242424;
   width: 100%;
   top: 0;

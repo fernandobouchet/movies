@@ -16,7 +16,7 @@ function Home(props) {
     <>
       <CardsContainer>{Movies}</CardsContainer>;
       <Pagination
-        initialPage={1}
+        initialPage={0}
         pageCount={500}
         breakLabel="..."
         nextLabel="next >"
@@ -62,8 +62,13 @@ const Pagination = styled(ReactPaginate)`
   list-style-type: none;
 
   .page-link {
-    font-size: 1.1rem;
+    font-family: inherit;
+    font-size: 1.3rem;
     background-color: #242424;
     padding: 1rem;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 `;

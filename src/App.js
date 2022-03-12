@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import loadMovies from "./Utils/Axios";
+import { loadMovies } from "./components/Utils/Axios";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Movie from "./components/Movie/Movie";
@@ -18,7 +18,6 @@ function App() {
   }, [page]);
 
   function changePage(e) {
-    console.log(e);
     setPage(e.selected + 1);
   }
 
