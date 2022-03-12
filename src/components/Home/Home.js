@@ -24,7 +24,7 @@ function Home(props) {
         previousLabel="< previous"
         onPageChange={changePage}
         renderOnZeroPageCount={null}
-        marginPagesDisplayed={2}
+        marginPagesDisplayed={1}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -69,6 +69,7 @@ const Pagination = styled(ReactPaginate)`
   .active > .page-link {
     background-color: black;
     border-style: solid;
+    border-width: 0.1rem;
   }
 
   .page-link {
@@ -83,7 +84,11 @@ const Pagination = styled(ReactPaginate)`
   }
 
   @media (max-width: 480px) {
-    font-size: 1rem;
-    padding: 0.5rem;
+    .page-link {
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 0.5rem;
+      background-color: #242424;
+    }
   }
 `;

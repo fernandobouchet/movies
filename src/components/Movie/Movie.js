@@ -96,6 +96,10 @@ const MovieCard = styled.div`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  @media (max-width: 480px) {
+    padding: 4rem 1rem;
+  }
 `;
 
 const MovieImgOver = styled.div`
@@ -118,7 +122,8 @@ const MovieTitle = styled.h1`
   margin: 1rem;
 
   @media (max-width: 480px) {
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: 1rem;
   }
 `;
 
@@ -144,7 +149,7 @@ const Video = styled.iframe`
 
   @media (max-width: 480px) {
     width: 90%;
-    height: 71%;
+    height: 65%;
     allowfullscreen: true;
   }
 `;
