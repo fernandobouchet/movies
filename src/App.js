@@ -8,18 +8,28 @@ import Movie from "./components/Movie/Movie";
 function App() {
   const [movies, setMovies] = useState([]);
 
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     (async () => {
-      const movies = await loadMovies();
+      const movies = await loadMovies(page);
       setMovies(movies);
     })();
-  }, []);
+  }, [page]);
+
+  function changePage(e) {
+    console.log(e);
+    setPage(e.selected + 1);
+  }
 
   return (
     <div>
       <Header></Header>
       <Routes>
-        <Route path="/" element={<Home movies={movies} />} />
+        <Route
+          path="/"
+          element={<Home movies={movies} page={page} changePage={changePage} />}
+        />
         <Route path="/Movie/:movieId" element={<Movie />} />
       </Routes>
     </div>

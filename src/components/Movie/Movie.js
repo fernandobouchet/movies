@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 function Movie() {
   const movie = useLocation();
   const { title, backdrop_path, poster_path, overview } = movie.state;
-  console.log(movie.state);
 
   return (
     <MovieContainer>

@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const loadMovies = async () => {
+const loadMovies = async (pages) => {
   try {
     const data = await axios.get("https://api.themoviedb.org/3/movie/popular", {
       params: {
-        page: "1",
+        page: pages,
       },
       headers: {
         Authorization:
