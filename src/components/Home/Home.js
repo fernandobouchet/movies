@@ -49,6 +49,11 @@ const CardsContainer = styled.div`
   justify-content: center;
   margin: 0;
   background-color: #000000;
+
+  @media (max-width: 480px) {
+    padding-top: 5rem;
+    grid-template-columns: repeat(2, 16rem);
+  }
 `;
 
 const Pagination = styled(ReactPaginate)`
@@ -56,7 +61,7 @@ const Pagination = styled(ReactPaginate)`
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  gap: 1rem;
+  gap: 0.5rem;
   color: white;
   cursor: pointer;
   list-style-type: none;
@@ -69,6 +74,11 @@ const Pagination = styled(ReactPaginate)`
 
     &:hover {
       opacity: 0.8;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      padding: 0.5rem;
     }
   }
 `;

@@ -33,6 +33,10 @@ const CardImage = styled.img`
   width: 18rem;
   height: auto;
   border-radius: 10px;
+
+  @media (max-width: 480px) {
+    width: 13rem;
+  }
 `;
 
 const CardTitle = styled.h2`
