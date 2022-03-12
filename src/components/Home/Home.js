@@ -9,14 +9,18 @@ function Home(props) {
     return <Cards key={nanoid()} movie={movie} />;
   });
 
+  console.log(movies);
+
   return <CardsContainer>{Movies}</CardsContainer>;
 }
 
 export default Home;
 
 const CardsContainer = styled.div`
+  padding-top: 10rem;
   display: grid;
   grid-template-columns: repeat(4, 20rem);
   justify-content: center;
-  margin: 5rem 1rem;
+  margin: 0;
+  background-color: #000000;
 `;

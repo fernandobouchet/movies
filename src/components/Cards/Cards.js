@@ -5,7 +5,7 @@ function Cards(props) {
   const { movie } = props;
   return (
     <CardContainer>
-      <StyledLink to={`/Movie/${movie.title}`} state={movie}>
+      <StyledLink to={`/Movie/${movie.id}`} state={movie}>
         <CardImage
           src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
           alt=""
@@ -19,24 +19,26 @@ function Cards(props) {
 export default Cards;
 
 const CardContainer = styled.div`
-  width: 15rem;
-  height: auto;
-  box-shadow: rgba(0, 0, 0, 0.55) 0px 5px 15px;
-  padding: 1rem;
   margin: 1rem;
-  border-radius: 0.5rem;
   text-align: center;
   cursor: pointer;
+  transition: 0.1s linear;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const CardImage = styled.img`
-  width: 15rem;
+  width: 18rem;
   height: auto;
-  border-radius: 0.5rem;
+  border-radius: 10px;
 `;
 
 const CardTitle = styled.h2`
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: white;
 `;
 
 const StyledLink = styled(Link)`

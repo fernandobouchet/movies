@@ -3,6 +3,9 @@ import axios from "axios";
 const loadMovies = async () => {
   try {
     const data = await axios.get("https://api.themoviedb.org/3/movie/popular", {
+      params: {
+        page: "1",
+      },
       headers: {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZjYwMGIzNzViNDM5NWEyMDZhMzA2NGFiNjZlNzg2OCIsInN1YiI6IjYyMjY4ZmEzZDQwZDRjMDA0NjJjODgyMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NpcuVJIyugPtAWL4P4KnxqAhcqNaTY8LWEbAWOdXSPE",

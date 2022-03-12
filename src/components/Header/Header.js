@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
-  let navigate = useNavigate();
-
   return (
     <StyledHeader>
-      <h1 onClick={() => navigate("/")}>Movies +</h1>
+      <Title>
+        <StyledLink to={"/"}>Movies + </StyledLink>
+      </Title>
     </StyledHeader>
   );
 }
@@ -15,10 +15,21 @@ export default Header;
 
 const StyledHeader = styled.header`
   position: fixed;
-  background-color: white;
+  background-color: #242424;
   width: 100%;
   top: 0;
-  height: 5rem;
-  text-align: center;
+  height: 6rem;
+  text-align: initial;
+`;
+
+const StyledLink = styled(Link)`
+  color: white;
   cursor: pointer;
+  text-decoration: none;
+`;
+
+const Title = styled.h1`
+  margin: 0;
+  padding: 1rem;
+  font-size: 4rem;
 `;
