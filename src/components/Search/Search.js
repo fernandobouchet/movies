@@ -1,15 +1,24 @@
+import { useEffect, useState } from "react";
+import { searchMovie } from "../Utils/Axios";
 import Cards from "../Cards/Cards";
-import styled from "styled-components";
 import { nanoid } from "nanoid";
+import styled from "styled-components";
 
-function Home(props) {
-  const { movies } = props;
+function Search(props) {
+  const { search } = props;
+
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const movies = await searchMovie(search);
+      setMovies(movies);
+    })();
+  }, [search]);
 
   const Movies = movies.map((movie) => {
     return <Cards key={nanoid()} movie={movie} />;
   });
-
-  console.log(movies);
 
   return (
     <>
@@ -18,7 +27,7 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default Search;
 
 const CardsContainer = styled.div`
   padding-top: 10rem;

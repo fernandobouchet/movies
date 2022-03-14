@@ -28,7 +28,7 @@ function Movie() {
       ).key;
       setVideoId(videoKey);
     })();
-  }, []);
+  }, [id]);
 
   return (
     <MovieContainer>
