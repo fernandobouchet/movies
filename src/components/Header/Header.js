@@ -41,7 +41,7 @@ function Header(props) {
           navigate("/Search");
         }}
       >
-        <input type="search" name="" id="" />
+        <StyledInput type="search" name="" id="" />
         <SearchButton type="submit">Search</SearchButton>
       </form>
     </StyledHeader>
@@ -80,7 +80,7 @@ const Title = styled.h1`
   font-size: 4rem;
 
   @media (max-width: 480px) {
-    font-size: 2.5rem;
+    font-size: 2rem;
     padding: 0.5rem;
   }
 `;
@@ -98,6 +98,15 @@ const StyledSelect = styled.select`
 const StyledOption = styled.option`
   border-style: none;
 `;
+
+const StyledInput = styled.input`
+  border-style: none;
+
+  @media (max-width: 480px) {
+    width: 3rem;
+  }
+`;
+
 const SearchButton = styled.button`
   background-color: black;
   font-family: inherit;

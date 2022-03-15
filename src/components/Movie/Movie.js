@@ -9,12 +9,6 @@ function Movie() {
 
   const [videoId, setVideoId] = useState("");
 
-  const [video, setVideo] = useState(false);
-
-  function showVideo() {
-    setVideo((prevState) => !prevState);
-  }
-
   useEffect(() => {
     (async () => {
       const videos = await getVideo(id);
@@ -31,31 +25,30 @@ function Movie() {
   }, [id]);
 
   return (
-    <MovieContainer>
-      <MovieTitle>{title}</MovieTitle>
-      <MovieCard
-        backgroundUrl={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-      >
-        <MovieImgOver>
-          <Container>
-            <CardImage
-              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            ></CardImage>
-          </Container>
-          {video && (
-            <Video
-              src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></Video>
-          )}
-        </MovieImgOver>
-        <MovieOverview>{overview}</MovieOverview>
-        <TrailerButton onClick={showVideo}>
-          {!video ? "Watch Trailer" : "Close Trailer"}
-        </TrailerButton>
+    <MovieContainer
+      backgroundUrl={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+    >
+      <MovieCard>
+        <Card>
+          <MovieTitle>{title}</MovieTitle>
+          <MovieImgOver>
+            <Container>
+              <CardImage
+                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+              ></CardImage>
+            </Container>
+            {videoId && (
+              <Video
+                src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></Video>
+            )}
+          </MovieImgOver>
+          <MovieOverview>{overview}</MovieOverview>
+        </Card>
       </MovieCard>
     </MovieContainer>
   );
@@ -70,6 +63,11 @@ const MovieContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-image: linear-gradient(to top, black, transparent),
+    url(${(props) => props.backgroundUrl});
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Container = styled.div`
@@ -87,18 +85,29 @@ const MovieCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1000px;
-  height: 450px;
-  padding: 5rem 5rem;
-  border-radius: 10px;
-  background-image: linear-gradient(to top, black, transparent),
-    url(${(props) => props.backgroundUrl});
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  margin-top: 6rem;
+  background-color: transparent;
+  backdrop-filter: blur(3px);
 
   @media (max-width: 480px) {
-    padding: 4rem 1rem;
+    margin-top: 4rem;
+  }
+`;
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  height: 500px;
+  margin-top: 6rem;
+
+  @media (max-width: 480px) {
+    text-align: center;
+    width: 90%;
+    margin-top: 1rem;
   }
 `;
 
@@ -107,6 +116,10 @@ const MovieImgOver = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 const CardImage = styled.img`
@@ -122,7 +135,7 @@ const MovieTitle = styled.h1`
   margin: 1rem;
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 1rem;
   }
 `;
@@ -138,35 +151,13 @@ const MovieOverview = styled.p`
 `;
 
 const Video = styled.iframe`
-  width: 1000px;
-  height: 440px;
-  position: absolute;
-  padding: 2rem;
-  border: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 720px;
+  height: 300px;
+  border-style: none;
+  border-radius: 10px;
 
   @media (max-width: 480px) {
     width: 90%;
     height: 65%;
-    allowfullscreen: true;
-  }
-`;
-
-const TrailerButton = styled.button`
-  background-color: #242424;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: white;
-  margin-top: 3rem;
-  padding: 1rem;
-  border: 0;
-  cursor: pointer;
-  transition: linear 2ms;
-
-  &:hover {
-    transform: scale(1.1);
   }
 `;
