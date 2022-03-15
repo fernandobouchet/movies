@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const loadMovies = async (type) => {
+const loadMovies = async (type, pages) => {
   try {
     const data = await axios.get(`https://api.themoviedb.org/3/movie/${type}`, {
       params: {
+        page: pages,
         include_adult: false,
       },
       headers: {
@@ -12,7 +13,7 @@ const loadMovies = async (type) => {
       },
     });
     if (data.status === 200) {
-      return data.data.results;
+      return data.data;
     } else if (data.status === 401) {
       console.log("Wrong key");
     } else if (data.status === 404) {

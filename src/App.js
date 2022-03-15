@@ -11,21 +11,35 @@ function App() {
 
   const [type, setType] = useState("popular");
 
+  const [pages, setPages] = useState(1);
+
+  const [paginationPages, setPaginationPages] = useState(1);
+
   const [search, setSearch] = useState("movie");
 
   useEffect(() => {
     (async () => {
-      const movies = await loadMovies(type);
-      setMovies(movies);
+      const movies = await loadMovies(type, pages);
+      if (type === "popular") {
+        setPaginationPages(500);
+      } else {
+        setPaginationPages(movies.total_pages);
+      }
+      setMovies(movies.results);
     })();
-  }, [type]);
+  }, [type, pages]);
 
   function changeType(type) {
     setType(type);
+    setPages(1);
   }
 
   function searchMovie(movie) {
     setSearch(movie);
+  }
+
+  function changePage(e) {
+    setPages(e.selected + 1);
   }
 
   return (
@@ -35,7 +49,17 @@ function App() {
         SearchMovie={(movie) => searchMovie(movie)}
       ></Header>
       <Routes>
-        <Route path="/" element={<Home movies={movies} type={type} />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              movies={movies}
+              type={type}
+              changePage={(e) => changePage(e)}
+              PaginationPages={paginationPages}
+            />
+          }
+        />
         <Route path="/Movie/:movieId" element={<Movie />} />
         <Route path="/Search" element={<Search search={search} />} />
       </Routes>
