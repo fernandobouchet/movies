@@ -26,10 +26,11 @@ const loadMovies = async (type, pages) => {
   }
 };
 
-const searchMovie = async (movie) => {
+const searchMovie = async (movie, page) => {
   try {
     const data = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
       params: {
+        page: page,
         query: movie,
         include_adult: false,
       },
@@ -39,7 +40,7 @@ const searchMovie = async (movie) => {
       },
     });
     if (data.status === 200) {
-      return data.data.results;
+      return data.data;
     } else if (data.status === 401) {
       console.log("Wrong key");
     } else if (data.status === 404) {
