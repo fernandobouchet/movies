@@ -55,6 +55,8 @@ const StyledHeader = styled.header`
   overflow: hidden;
   display: flex;
   align-items: center;
+  z-index: 1;
+
   gap: 1rem;
 
   background-color: #242424;

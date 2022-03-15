@@ -126,7 +126,7 @@ const CardImage = styled.img`
   width: 200px;
   height: auto;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 20px;
 `;
 
 const MovieTitle = styled.h1`
