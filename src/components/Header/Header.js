@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 
 function Header(props) {
   const { ChangeType, SearchMovie } = props;
@@ -21,6 +22,18 @@ function Header(props) {
       <Title>
         <StyledLink to={"/"}>Movies +</StyledLink>
       </Title>
+      <form
+        action="submit"
+        onSubmit={(e) => {
+          handleSearch(e);
+          navigate("/Search");
+        }}
+      >
+        <StyledInput type="search" name="" id="" placeholder="Search Movie" />
+        <SearchButton type="submit">
+          <BsSearch />
+        </SearchButton>
+      </form>
       <StyledSelect
         name="movies"
         id=""
@@ -34,16 +47,6 @@ function Header(props) {
         <StyledOption value="top_rated">Top Rated</StyledOption>
         <StyledOption value="now_playing">Now Playing</StyledOption>
       </StyledSelect>
-      <form
-        action="submit"
-        onSubmit={(e) => {
-          handleSearch(e);
-          navigate("/Search");
-        }}
-      >
-        <StyledInput type="search" name="" id="" />
-        <SearchButton type="submit">Search</SearchButton>
-      </form>
     </StyledHeader>
   );
 }
@@ -54,6 +57,7 @@ const StyledHeader = styled.header`
   position: fixed;
   overflow: hidden;
   display: flex;
+  justify-content: space-around;
   align-items: center;
   z-index: 1;
 
@@ -74,6 +78,7 @@ const StyledLink = styled(Link)`
   color: white;
   cursor: pointer;
   text-decoration: none;
+  height: 2rem;
 `;
 
 const Title = styled.h1`
@@ -92,7 +97,7 @@ const StyledSelect = styled.select`
   font-size: 1.5rem;
   width: 11rem;
   height: 3rem;
-  background-color: black;
+  background-color: inherit;
   color: white;
   border-style: none;
 `;
@@ -102,21 +107,25 @@ const StyledOption = styled.option`
 `;
 
 const StyledInput = styled.input`
-  border-style: none;
-
+  border-style: solid;
+  background-color: inherit;
+  height: 2.5rem;
+  border-radius: 10px;
+  color: white;
   @media (max-width: 480px) {
     width: 3rem;
   }
 `;
 
 const SearchButton = styled.button`
-  background-color: black;
+  background-color: transparent;
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: white;
   border-style: none;
   cursor: pointer;
   transition: linear 2ms;
+  vertical-align: middle;
 
   &:hover {
     transform: scale(1.1);

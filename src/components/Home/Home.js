@@ -12,28 +12,32 @@ function Home(props) {
 
   return (
     <>
-      <CardsContainer>{Movies}</CardsContainer>;
-      <Pagination
-        initialPage={0}
-        pageCount={PaginationPages}
-        breakLabel="..."
-        nextLabel="next >"
-        pageRangeDisplayed={2}
-        previousLabel="< previous"
-        onPageChange={changePage}
-        renderOnZeroPageCount={null}
-        marginPagesDisplayed={1}
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination"
-        activeClassName="active"
-      ></Pagination>
+      {movies && (
+        <>
+          <CardsContainer>{Movies}</CardsContainer>;
+          <Pagination
+            initialPage={0}
+            pageCount={PaginationPages}
+            breakLabel="..."
+            nextLabel="next >"
+            pageRangeDisplayed={2}
+            previousLabel="< previous"
+            onPageChange={changePage}
+            renderOnZeroPageCount={null}
+            marginPagesDisplayed={1}
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="pagination"
+            activeClassName="active"
+          ></Pagination>
+        </>
+      )}
     </>
   );
 }
