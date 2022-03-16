@@ -63,7 +63,7 @@ const StyledHeader = styled.header`
 
   gap: 1rem;
 
-  background-color: #242424;
+  background-color: black;
   width: 100%;
   top: 0;
   height: 6rem;

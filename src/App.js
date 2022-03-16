@@ -17,16 +17,15 @@ function App() {
 
   const [search, setSearch] = useState("movie");
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    (async () => {
-      const movies = await loadMovies(type, pages);
-      if (type === "popular") {
-        setPaginationPages(500);
-      } else {
-        setPaginationPages(movies.total_pages);
-      }
+    setLoading(true);
+    loadMovies(type, pages).then((movies) => {
       setMovies(movies.results);
-    })();
+      setPaginationPages(type === "popular" ? 500 : movies.total_pages);
+    });
+    setLoading(false);
   }, [type, pages]);
 
   function changeType(type) {
@@ -57,6 +56,7 @@ function App() {
               type={type}
               changePage={(e) => changePage(e)}
               PaginationPages={paginationPages}
+              loading={loading}
             />
           }
         />

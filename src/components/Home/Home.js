@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import ReactPaginate from "react-paginate";
 
 function Home(props) {
-  const { movies, changePage, PaginationPages } = props;
+  const { movies, changePage, PaginationPages, loading } = props;
 
   const Movies = movies.map((movie) => {
     return <Cards key={nanoid()} movie={movie} />;
@@ -12,7 +12,7 @@ function Home(props) {
 
   return (
     <>
-      {movies && (
+      {!loading && (
         <>
           <CardsContainer>{Movies}</CardsContainer>;
           <Pagination

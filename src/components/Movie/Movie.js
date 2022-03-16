@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getVideo } from "../Utils/Axios";
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 function Movie() {
   const movie = useLocation();
@@ -9,10 +11,17 @@ function Movie() {
 
   const [videoId, setVideoId] = useState("");
 
+  const [showVideo, setShowVideo] = useState(false);
+
+  let navigate = useNavigate();
+
+  function setVideo() {
+    setShowVideo((prevState) => !prevState);
+  }
+
   useEffect(() => {
     (async () => {
       const videos = await getVideo(id);
-      console.log(videos);
       const videoKey = videos.find(
         (movie) =>
           movie.name.includes("Trailer") ||
@@ -31,13 +40,12 @@ function Movie() {
       <MovieCard>
         <Card>
           <MovieTitle>{title}</MovieTitle>
-          <MovieImgOver>
-            <Container>
-              <CardImage
-                src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-              ></CardImage>
-            </Container>
-            {videoId && (
+          <Container>
+            <CardImage
+              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+            ></CardImage>
+            <MovieOverview>{overview}</MovieOverview>
+            {showVideo && (
               <Video
                 src={`https://www.youtube-nocookie.com/embed/${videoId}`}
                 title="YouTube video player"
@@ -46,8 +54,15 @@ function Movie() {
                 allowfullscreen
               ></Video>
             )}
-          </MovieImgOver>
-          <MovieOverview>{overview}</MovieOverview>
+          </Container>
+          <ButtonsContainer>
+            <Button onClick={() => navigate("/")}>
+              <BiArrowBack></BiArrowBack> Back
+            </Button>
+            <Button onClick={setVideo}>
+              {!showVideo ? "Watch Trailer" : "Close Trailer"}
+            </Button>
+          </ButtonsContainer>
         </Card>
       </MovieCard>
     </MovieContainer>
@@ -60,9 +75,6 @@ const MovieContainer = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-position: center;
   background-image: linear-gradient(to top, black, transparent),
     url(${(props) => props.backgroundUrl});
@@ -71,13 +83,22 @@ const MovieContainer = styled.div`
 `;
 
 const Container = styled.div`
-  display: flex;
   width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
 
   @media (max-width: 480px) {
+    flex-direction: column;
     font-size: 3rem;
     width: 100%;
+    margin-top: 0;
     justify-content: center;
+    padding: 1rem;
   }
 `;
 
@@ -100,25 +121,14 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 80%;
   height: 500px;
-  margin-top: 6rem;
+  margin-top: 2rem;
 
   @media (max-width: 480px) {
     text-align: center;
     width: 90%;
     margin-top: 1rem;
-  }
-`;
-
-const MovieImgOver = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
-  @media (max-width: 480px) {
-    flex-direction: column;
   }
 `;
 
@@ -147,17 +157,48 @@ const MovieOverview = styled.p`
   font-weight: 400;
   color: white;
   text-align: center;
-  margin-top: auto;
+  margin-left: auto;
 `;
 
 const Video = styled.iframe`
-  width: 720px;
-  height: 300px;
+  width: 55%;
+  height: 400px;
+  position: absolute;
   border-style: none;
   border-radius: 10px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 480px) {
-    width: 90%;
-    height: 65%;
+    top: 44%;
+    left: 50%;
+    width: 95%;
+    height: 70%;
   }
+`;
+
+const Button = styled.button`
+  background-color: #242424;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: white;
+  margin-top: 5rem;
+  padding: 1rem;
+  border: 0;
+  cursor: pointer;
+  transition: linear 2ms;
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 2rem;
+  }
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 2rem;
 `;
