@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getVideo } from "../Utils/Axios";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 
 function Movie() {
   const movie = useLocation();
@@ -13,63 +14,85 @@ function Movie() {
 
   const [showVideo, setShowVideo] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   let navigate = useNavigate();
 
   function setVideo() {
     setShowVideo((prevState) => !prevState);
   }
 
+  function findVideoKey(videoId) {
+    const videoKey = videoId.find(
+      (movie) =>
+        movie.name.includes("Trailer") ||
+        movie.name === "Official Trailer" ||
+        movie.name === "Main Trailer" ||
+        movie.name === "Final Trailer"
+    ).key;
+    return videoKey;
+  }
+
   useEffect(() => {
-    (async () => {
-      const videos = await getVideo(id);
-      const videoKey = videos.find(
-        (movie) =>
-          movie.name.includes("Trailer") ||
-          movie.name === "Official Trailer" ||
-          movie.name === "Main Trailer" ||
-          movie.name === "Final Trailer"
-      ).key;
-      setVideoId(videoKey);
-    })();
+    setLoading(true);
+    getVideo(id).then((videos) => {
+      setVideoId(findVideoKey(videos));
+      setTimeout(() => setLoading(false), 500);
+    });
   }, [id]);
 
   return (
-    <MovieContainer
-      backgroundUrl={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-    >
-      <MovieCard>
-        <Card>
-          <MovieTitle>{title}</MovieTitle>
-          <Container>
-            <CardImage
-              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            ></CardImage>
-            <MovieOverview>{overview}</MovieOverview>
-            {showVideo && (
-              <Video
-                src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></Video>
-            )}
-          </Container>
-          <ButtonsContainer>
-            <Button onClick={() => navigate("/")}>
-              <BiArrowBack></BiArrowBack> Back
-            </Button>
-            <Button onClick={setVideo}>
-              {!showVideo ? "Watch Trailer" : "Close Trailer"}
-            </Button>
-          </ButtonsContainer>
-        </Card>
-      </MovieCard>
-    </MovieContainer>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <MovieContainer
+          backgroundUrl={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+        >
+          <MovieCard>
+            <Card>
+              <MovieTitle>{title}</MovieTitle>
+              <Container>
+                <CardImage
+                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                ></CardImage>
+                <MovieOverview>{overview}</MovieOverview>
+                {showVideo && (
+                  <Video
+                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></Video>
+                )}
+              </Container>
+              <ButtonsContainer>
+                <Button onClick={() => navigate("/")}>
+                  <BiArrowBack></BiArrowBack> Back
+                </Button>
+                <Button onClick={setVideo}>
+                  {!showVideo ? "Watch Trailer" : "Close Trailer"}
+                </Button>
+              </ButtonsContainer>
+            </Card>
+          </MovieCard>
+        </MovieContainer>
+      )}
+    </>
   );
 }
 
 export default Movie;
+
+const fadeIn = keyframes`
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+`;
 
 const MovieContainer = styled.div`
   width: 100%;
@@ -80,6 +103,11 @@ const MovieContainer = styled.div`
     url(${(props) => props.backgroundUrl});
   background-size: cover;
   background-repeat: no-repeat;
+  opacity: 1;
+  animation-name: ${fadeIn};
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 2s;
 `;
 
 const Container = styled.div`

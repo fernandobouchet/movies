@@ -1,32 +1,16 @@
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { loadMovies } from "./components/Utils/Axios";
+import { useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Movie from "./components/Movie/Movie";
 import Search from "./components/Search/Search";
 
 function App() {
-  const [movies, setMovies] = useState([]);
-
   const [type, setType] = useState("popular");
 
   const [pages, setPages] = useState(1);
 
-  const [paginationPages, setPaginationPages] = useState(1);
-
   const [search, setSearch] = useState("movie");
-
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    loadMovies(type, pages).then((movies) => {
-      setMovies(movies.results);
-      setPaginationPages(type === "popular" ? 500 : movies.total_pages);
-    });
-    setLoading(false);
-  }, [type, pages]);
 
   function changeType(type) {
     setType(type);
@@ -51,13 +35,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Home
-              movies={movies}
-              type={type}
-              changePage={(e) => changePage(e)}
-              PaginationPages={paginationPages}
-              loading={loading}
-            />
+            <Home type={type} pages={pages} changePage={(e) => changePage(e)} />
           }
         />
         <Route path="/Movie/:movieId" element={<Movie />} />

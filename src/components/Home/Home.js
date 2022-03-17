@@ -1,10 +1,28 @@
 import Cards from "../Cards/Cards";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { nanoid } from "nanoid";
 import ReactPaginate from "react-paginate";
+import { useEffect, useState } from "react";
+import { loadMovies } from "../Utils/Axios";
+import Spinner from "../Spinner/Spinner";
 
 function Home(props) {
-  const { movies, changePage, PaginationPages, loading } = props;
+  const { changePage, type, pages } = props;
+
+  const [movies, setMovies] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const [paginationPages, setPaginationPages] = useState(1);
+
+  useEffect(() => {
+    setLoading(true);
+    loadMovies(type, pages).then((movies) => {
+      setMovies(movies.results);
+      setPaginationPages(type === "popular" ? 500 : movies.total_pages);
+    });
+    setTimeout(() => setLoading(false), 500);
+  }, [type, pages]);
 
   const Movies = movies.map((movie) => {
     return <Cards key={nanoid()} movie={movie} />;
@@ -12,12 +30,14 @@ function Home(props) {
 
   return (
     <>
-      {!loading && (
-        <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <HomeContainer>
           <CardsContainer>{Movies}</CardsContainer>;
           <Pagination
             initialPage={0}
-            pageCount={PaginationPages}
+            pageCount={paginationPages}
             breakLabel="..."
             nextLabel="next >"
             pageRangeDisplayed={2}
@@ -36,13 +56,30 @@ function Home(props) {
             containerClassName="pagination"
             activeClassName="active"
           ></Pagination>
-        </>
+        </HomeContainer>
       )}
     </>
   );
 }
 
 export default Home;
+
+const fadeIn = keyframes`
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+`;
+
+const HomeContainer = styled.div`
+  opacity: 1;
+  animation-name: ${fadeIn};
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 2s;
+`;
 
 const CardsContainer = styled.div`
   padding-top: 10rem;
