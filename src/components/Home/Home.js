@@ -1,24 +1,11 @@
 import Cards from "../Cards/Cards";
 import styled, { keyframes } from "styled-components";
 import { nanoid } from "nanoid";
-import { useEffect, useState } from "react";
-import { loadMovies } from "../Utils/Axios";
 import Spinner from "../Spinner/Spinner";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Home(props) {
-  const { type } = props;
-
-  const [movies, setMovies] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    loadMovies(type).then((movies) => {
-      setMovies(movies.results);
-    });
-    setTimeout(() => setLoading(false), 500);
-  }, [type]);
+  const { movies, addPages } = props;
 
   const Movies = movies.map((movie) => {
     return <Cards key={nanoid()} movie={movie} />;
@@ -26,13 +13,16 @@ function Home(props) {
 
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
+      <InfiniteScroll
+        dataLength={movies.length}
+        hasMore={true}
+        next={addPages}
+        loader={<Spinner />}
+      >
         <HomeContainer>
           <CardsContainer>{Movies}</CardsContainer>;
         </HomeContainer>
-      )}
+      </InfiniteScroll>
     </>
   );
 }

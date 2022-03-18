@@ -1,21 +1,43 @@
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Movie from "./components/Movie/Movie";
 import Search from "./components/Search/Search";
+import { loadMovies } from "./components/Utils/Axios";
 
 function App() {
   const [type, setType] = useState("popular");
 
+  const [savedType, setSavedType] = useState("popular");
+
   const [search, setSearch] = useState("movie");
 
+  const [movies, setMovies] = useState([]);
+
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    loadMovies(type, page).then((movies) => {
+      setMovies((prevMovies) => prevMovies.concat(movies.results));
+    });
+  }, [type, page]);
+
   function changeType(type) {
-    setType(type);
+    if (savedType !== type) {
+      setMovies([]);
+      setPage(1);
+      setType(type);
+      setSavedType(type);
+    }
   }
 
   function searchMovie(movie) {
     setSearch(movie);
+  }
+
+  function addPage() {
+    setPage((prevPage) => prevPage + 1);
   }
 
   return (
@@ -25,7 +47,10 @@ function App() {
         SearchMovie={(movie) => searchMovie(movie)}
       ></Header>
       <Routes>
-        <Route path="/" element={<Home type={type} />} />
+        <Route
+          path="/"
+          element={<Home movies={movies} addPages={() => addPage()} />}
+        />
         <Route path="/Movie/:movieId" element={<Movie />} />
         <Route path="/Search" element={<Search search={search} />} />
       </Routes>

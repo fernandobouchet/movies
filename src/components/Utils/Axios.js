@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const loadMovies = async (type) => {
+const loadMovies = async (type, page) => {
   try {
     const data = await axios.get(`https://api.themoviedb.org/3/movie/${type}`, {
       params: {
-        page: 1,
+        page: page,
         include_adult: false,
       },
       headers: {
@@ -26,11 +26,11 @@ const loadMovies = async (type) => {
   }
 };
 
-const searchMovie = async (movie) => {
+const searchMovie = async (movie, page) => {
   try {
     const data = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
       params: {
-        page: 1,
+        page: page,
         query: movie,
         include_adult: false,
       },

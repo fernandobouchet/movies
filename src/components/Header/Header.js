@@ -9,12 +9,19 @@ function Header(props) {
   let navigate = useNavigate();
 
   function handleChange(e) {
+    goToTop();
     ChangeType(e.target.value);
   }
 
   function handleSearch(e) {
     e.preventDefault();
+    goToTop();
     SearchMovie(e.target[0].value);
+  }
+
+  function goToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 
   return (
