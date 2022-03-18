@@ -8,21 +8,14 @@ import Search from "./components/Search/Search";
 function App() {
   const [type, setType] = useState("popular");
 
-  const [pages, setPages] = useState(1);
-
   const [search, setSearch] = useState("movie");
 
   function changeType(type) {
     setType(type);
-    setPages(1);
   }
 
   function searchMovie(movie) {
     setSearch(movie);
-  }
-
-  function changePage(e) {
-    setPages(e.selected + 1);
   }
 
   return (
@@ -32,12 +25,7 @@ function App() {
         SearchMovie={(movie) => searchMovie(movie)}
       ></Header>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home type={type} pages={pages} changePage={(e) => changePage(e)} />
-          }
-        />
+        <Route path="/" element={<Home type={type} />} />
         <Route path="/Movie/:movieId" element={<Movie />} />
         <Route path="/Search" element={<Search search={search} />} />
       </Routes>
