@@ -1,14 +1,24 @@
 import styled, { keyframes } from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getVideo } from "../Utils/Axios";
+import { getVideo, getCredits } from "../Utils/Axios";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
+import { genres } from "../Utils/Genres";
 
 function Movie() {
   const movie = useLocation();
-  const { title, backdrop_path, poster_path, overview, id } = movie.state;
+  const {
+    title,
+    release_date,
+    original_title,
+    backdrop_path,
+    poster_path,
+    overview,
+    id,
+    genre_ids,
+  } = movie.state;
 
   const [videoId, setVideoId] = useState("");
 
@@ -16,19 +26,37 @@ function Movie() {
 
   const [loading, setLoading] = useState(true);
 
+  const [credits, setCredits] = useState([]);
+
   let navigate = useNavigate();
+
+  useEffect(() => {
+    getCredits(id).then((credit) => setCredits(credit));
+  }, [id]);
+
+  const Cast = credits
+    .filter((credit) => credit.order <= 12)
+    .map((actor) => actor.name)
+    .join(", ");
 
   function setVideo() {
     setShowVideo((prevState) => !prevState);
   }
 
+  console.log(credits);
+
+  const movieGenres = genres
+    .filter((genre) => genre_ids.some((genreId) => genreId === genre.id))
+    .map((genre) => genre.name)
+    .join(", ");
+
   function findVideoKey(videoId) {
     const videoKey = videoId.find(
       (movie) =>
         movie.name.includes("Trailer") ||
-        movie.name === "Official Trailer" ||
-        movie.name === "Main Trailer" ||
-        movie.name === "Final Trailer"
+        movie.name.includes("Official Trailer") ||
+        movie.name.includes("Main Trailer") ||
+        movie.name.includes("Final Trailer")
     ).key;
     return videoKey;
   }
@@ -56,7 +84,15 @@ function Movie() {
                 <CardImage
                   src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
                 ></CardImage>
-                <MovieOverview>{overview}</MovieOverview>
+                <InfoContainer>
+                  <MovieOverview>
+                    Original Title: {original_title}.
+                  </MovieOverview>
+                  <MovieOverview>Release Date: {release_date}.</MovieOverview>
+                  <MovieOverview>Genre: {movieGenres}.</MovieOverview>
+                  <MovieOverview>Cast: {Cast}.</MovieOverview>
+                  <MovieOverview>Synopsis: {overview}</MovieOverview>
+                </InfoContainer>
                 {showVideo && (
                   <Video
                     src={`https://www.youtube-nocookie.com/embed/${videoId}`}
@@ -111,7 +147,7 @@ const MovieContainer = styled.div`
 `;
 
 const Container = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,13 +157,18 @@ const Container = styled.div`
   border-radius: 10px;
 
   @media (max-width: 480px) {
+    width: 90%;
     flex-direction: column;
     font-size: 3rem;
-    width: 100%;
     margin-top: 0;
     justify-content: center;
     padding: 1rem;
   }
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const MovieCard = styled.div`
@@ -183,8 +224,7 @@ const MovieOverview = styled.p`
   font-size: 1.5rem;
   font-weight: 400;
   color: white;
-  text-align: center;
-  margin-left: auto;
+  text-align: left;
 `;
 
 const Video = styled.iframe`

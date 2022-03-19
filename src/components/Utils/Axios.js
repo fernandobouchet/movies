@@ -78,4 +78,29 @@ const getVideo = async (videoId) => {
   }
 };
 
-export { loadMovies, getVideo, searchMovie };
+const getCredits = async (movieId) => {
+  try {
+    const data = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits`,
+      {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZjYwMGIzNzViNDM5NWEyMDZhMzA2NGFiNjZlNzg2OCIsInN1YiI6IjYyMjY4ZmEzZDQwZDRjMDA0NjJjODgyMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NpcuVJIyugPtAWL4P4KnxqAhcqNaTY8LWEbAWOdXSPE",
+        },
+      }
+    );
+    if (data.status === 200) {
+      return data.data.cast;
+    } else if (data.status === 401) {
+      console.log("Wrong key");
+    } else if (data.status === 404) {
+      console.log("The movie doesn't exists");
+    } else {
+      console.log("Unknow error");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { loadMovies, getVideo, searchMovie, getCredits };
