@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import { goToTop } from "../Utils/Functions";
 
 function Header(props) {
   const { ChangeType, SearchMovie } = props;
@@ -19,15 +20,12 @@ function Header(props) {
     SearchMovie(e.target[0].value);
   }
 
-  function goToTop() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }
-
   return (
     <StyledHeader>
       <Title>
-        <StyledLink to={"/"}>Movies +</StyledLink>
+        <StyledLink to={"/"}>
+          Movies <StyledSpan>+</StyledSpan>
+        </StyledLink>
       </Title>
       <form
         action="submit"
@@ -96,6 +94,14 @@ const Title = styled.h1`
   @media (max-width: 480px) {
     font-size: 2rem;
     padding: 0.5rem;
+  }
+`;
+const StyledSpan = styled.span`
+  color: red;
+  font-size: 4rem;
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 

@@ -14,7 +14,7 @@ export default Spinner;
 const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 25%;
+  align-items: center;
   height: 100vh;
 `;
 

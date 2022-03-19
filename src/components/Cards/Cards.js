@@ -1,13 +1,18 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { goToTop } from "../Utils/Functions";
 
 function Cards(props) {
   const { movie } = props;
   return (
     <CardContainer>
-      <StyledLink to={`/Movie/${movie.id}`} state={movie}>
+      <StyledLink
+        to={`/Movie/${movie.id}`}
+        state={movie}
+        onClick={() => goToTop()}
+      >
         <CardImage
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
           alt=""
         />
         <CardTitle>{movie.title}</CardTitle>

@@ -54,7 +54,7 @@ function Movie() {
               <MovieTitle>{title}</MovieTitle>
               <Container>
                 <CardImage
-                  src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
                 ></CardImage>
                 <MovieOverview>{overview}</MovieOverview>
                 {showVideo && (
@@ -135,7 +135,6 @@ const MovieCard = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
   margin-top: 6rem;
   background-color: transparent;
   backdrop-filter: blur(3px);
