@@ -39,19 +39,23 @@ function Header(props) {
           <BsSearch />
         </SearchButton>
       </form>
-      <StyledSelect
-        name="movies"
-        id=""
-        onChange={(e) => {
-          handleChange(e);
-          navigate("/");
-        }}
-      >
-        <StyledOption value="popular">Popular</StyledOption>
-        <StyledOption value="upcoming">Upcoming</StyledOption>
-        <StyledOption value="top_rated">Top Rated</StyledOption>
-        <StyledOption value="now_playing">Now Playing</StyledOption>
-      </StyledSelect>
+      <StyledRow>
+        {" "}
+        <StyledH2>Order By: </StyledH2>
+        <StyledSelect
+          name="movies"
+          id=""
+          onChange={(e) => {
+            handleChange(e);
+            navigate("/");
+          }}
+        >
+          <StyledOption value="popular">Popular</StyledOption>
+          <StyledOption value="upcoming">Upcoming</StyledOption>
+          <StyledOption value="top_rated">Top Rated</StyledOption>
+          <StyledOption value="now_playing">Now Playing</StyledOption>
+        </StyledSelect>
+      </StyledRow>
     </StyledHeader>
   );
 }
@@ -96,6 +100,14 @@ const Title = styled.h1`
     padding: 0.5rem;
   }
 `;
+
+const StyledH2 = styled.h2`
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: white;
+`;
+
 const StyledSpan = styled.span`
   color: red;
   font-size: 4rem;
@@ -109,10 +121,14 @@ const StyledSelect = styled.select`
   font-family: inherit;
   font-size: 1.5rem;
   width: 11rem;
-  height: 3rem;
-  background-color: inherit;
+  background-color: black;
   color: white;
   border-style: none;
+
+  &::content {
+    border-style: none;
+    background-color: red;
+  }
 `;
 
 const StyledOption = styled.option`
@@ -143,4 +159,9 @@ const SearchButton = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+`;
+
+const StyledRow = styled.div`
+  display: flex;
+  justify-content: center;
 `;
