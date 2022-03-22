@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getVideo, getCredits } from "../Utils/Axios";
 import { BiArrowBack } from "react-icons/bi";
+import { AiFillYoutube } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 import { genres } from "../Utils/Genres";
@@ -12,17 +13,15 @@ function Movie() {
   const {
     title,
     release_date,
-    original_title,
     backdrop_path,
     poster_path,
     overview,
+    vote_average,
     id,
     genre_ids,
   } = movie.state;
 
   const [videoId, setVideoId] = useState("");
-
-  const [showVideo, setShowVideo] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
@@ -38,12 +37,6 @@ function Movie() {
     .filter((credit) => credit.order <= 12)
     .map((actor) => actor.name)
     .join(", ");
-
-  function setVideo() {
-    setShowVideo((prevState) => !prevState);
-  }
-
-  console.log(credits);
 
   const movieGenres = genres
     .filter((genre) => genre_ids.some((genreId) => genreId === genre.id))
@@ -78,40 +71,56 @@ function Movie() {
           backgroundUrl={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
         >
           <MovieCard>
-            <Card>
+            <ContainerCol>
               <MovieTitle>{title}</MovieTitle>
-              <Container>
+              <ContainerRow>
                 <CardImage
                   src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
                 ></CardImage>
                 <InfoContainer>
                   <MovieOverview>
-                    Original Title: {original_title}.
+                    <strong>Release Date: </strong>
+                    {release_date}.
                   </MovieOverview>
-                  <MovieOverview>Release Date: {release_date}.</MovieOverview>
-                  <MovieOverview>Genre: {movieGenres}.</MovieOverview>
-                  <MovieOverview>Cast: {Cast}.</MovieOverview>
-                  <MovieOverview>Synopsis: {overview}</MovieOverview>
+                  <MovieOverview>
+                    <strong>Genre: </strong>
+                    {movieGenres}.
+                  </MovieOverview>
+                  <MovieOverview>
+                    <strong>Cast: </strong>
+                    {Cast}.
+                  </MovieOverview>
+                  <MovieOverview>
+                    <strong>Synopsis: </strong>
+                    {overview}
+                  </MovieOverview>
+                  <MovieOverview>
+                    <strong>Average Raiting: </strong>
+                    {vote_average} / 10.
+                  </MovieOverview>
                 </InfoContainer>
-                {showVideo && (
-                  <Video
-                    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></Video>
-                )}
-              </Container>
+              </ContainerRow>
               <ButtonsContainer>
                 <Button onClick={() => navigate("/")}>
-                  <BiArrowBack></BiArrowBack> Back
+                  <BiArrowBack style={{ verticalAlign: "middle" }} /> Back
                 </Button>
-                <Button onClick={setVideo}>
-                  {!showVideo ? "Watch Trailer" : "Close Trailer"}
-                </Button>
+                {videoId && (
+                  <Button>
+                    <StyledA
+                      href={`https://www.youtube.com/watch?v=${videoId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Watch Trailer{" "}
+                      <AiFillYoutube
+                        style={{ verticalAlign: "middle" }}
+                        size={20}
+                      />
+                    </StyledA>
+                  </Button>
+                )}
               </ButtonsContainer>
-            </Card>
+            </ContainerCol>
           </MovieCard>
         </MovieContainer>
       )}
@@ -132,8 +141,10 @@ const fadeIn = keyframes`
 
 const MovieContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
   display: flex;
+  align-items: center;
   background-position: center;
   background-image: linear-gradient(to top, black, transparent),
     url(${(props) => props.backgroundUrl});
@@ -144,25 +155,38 @@ const MovieContainer = styled.div`
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   animation-duration: 2s;
+
+  @media (max-width: 480px) {
+    height: calc(100vh - 40px);
+    margin-top: 40px;
+  }
 `;
 
-const Container = styled.div`
-  width: 80%;
+const ContainerCol = styled.div`
+  max-width: 900px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  margin-top: 2rem;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 
   @media (max-width: 480px) {
-    width: 90%;
+    font-size: 3rem;
+    justify-content: center;
+    margin: 10px;
+  }
+`;
+
+const ContainerRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 480px) {
     flex-direction: column;
     font-size: 3rem;
-    margin-top: 0;
-    justify-content: center;
-    padding: 1rem;
   }
 `;
 
@@ -175,28 +199,15 @@ const MovieCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  margin-top: 6rem;
+  height: calc(100vh - 60px);
   background-color: transparent;
   backdrop-filter: blur(3px);
 
   @media (max-width: 480px) {
-    margin-top: 4rem;
-  }
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  height: 500px;
-  margin-top: 2rem;
-
-  @media (max-width: 480px) {
-    text-align: center;
-    width: 90%;
-    margin-top: 1rem;
+    height: calc(100vh - 40px);
+    justify-content: flex-start;
   }
 `;
 
@@ -208,6 +219,7 @@ const CardImage = styled.img`
 `;
 
 const MovieTitle = styled.h1`
+  text-align: center;
   font-size: 5rem;
   color: white;
   margin: 1rem;
@@ -227,22 +239,11 @@ const MovieOverview = styled.p`
   text-align: left;
 `;
 
-const Video = styled.iframe`
-  width: 55%;
-  height: 400px;
-  position: absolute;
-  border-style: none;
-  border-radius: 10px;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  @media (max-width: 480px) {
-    top: 44%;
-    left: 50%;
-    width: 95%;
-    height: 70%;
-  }
+const StyledA = styled.a`
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  line-height: 30px;
 `;
 
 const Button = styled.button`
@@ -251,21 +252,25 @@ const Button = styled.button`
   font-weight: 400;
   font-size: 1.5rem;
   color: white;
-  margin-top: 5rem;
-  padding: 1rem;
+  margin-top: 2rem;
+  padding: 10px 15px;
   border: 0;
   cursor: pointer;
   transition: linear 2ms;
-  &:hover {
-    transform: scale(1.1);
-  }
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: middle;
 
-  @media (max-width: 480px) {
-    margin-top: 2rem;
+  &:hover {
+    opacity: 0.9;
   }
 `;
 
 const ButtonsContainer = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 50px;
+
+  @media (max-width: 480px) {
+    gap: 20px;
+  }
 `;

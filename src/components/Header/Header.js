@@ -69,13 +69,12 @@ const StyledHeader = styled.header`
   justify-content: space-around;
   align-items: center;
   z-index: 1;
-
   gap: 1rem;
 
   background-color: black;
   width: 100%;
   top: 0;
-  height: 6rem;
+  height: 60px;
   text-align: initial;
 
   @media (max-width: 480px) {
