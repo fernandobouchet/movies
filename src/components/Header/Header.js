@@ -105,6 +105,10 @@ const StyledH2 = styled.h2`
   font-size: 1.5rem;
   font-weight: 400;
   color: white;
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 const StyledSpan = styled.span`
@@ -124,9 +128,9 @@ const StyledSelect = styled.select`
   color: white;
   border-style: none;
 
-  &::content {
-    border-style: none;
-    background-color: red;
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    width: 60px;
   }
 `;
 
@@ -141,7 +145,9 @@ const StyledInput = styled.input`
   border-radius: 10px;
   color: white;
   @media (max-width: 480px) {
-    width: 3rem;
+    height: 20px;
+    font-size: 1rem;
+    width: 80px;
   }
 `;
 
@@ -157,6 +163,10 @@ const SearchButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
   }
 `;
 
