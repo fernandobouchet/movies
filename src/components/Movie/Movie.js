@@ -101,7 +101,7 @@ function Movie() {
                 </InfoContainer>
               </ContainerRow>
               <ButtonsContainer>
-                <Button onClick={() => navigate("/")}>
+                <Button onClick={() => navigate(-1)}>
                   <BiArrowBack style={{ verticalAlign: "middle" }} /> Back
                 </Button>
                 {videoId && (
