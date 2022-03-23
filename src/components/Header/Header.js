@@ -18,6 +18,8 @@ function Header(props) {
     e.preventDefault();
     goToTop();
     SearchMovie(e.target[0].value);
+    navigate(`/Search/${e.target[0].value}`);
+    e.target[0].value = "";
   }
 
   return (
@@ -31,7 +33,6 @@ function Header(props) {
         action="submit"
         onSubmit={(e) => {
           handleSearch(e);
-          navigate("/Search");
         }}
       >
         <StyledInput type="search" name="" id="" placeholder="Search Movie" />

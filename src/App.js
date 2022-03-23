@@ -52,7 +52,7 @@ function App() {
           element={<Home movies={movies} addPages={() => addPage()} />}
         />
         <Route path="/Movie/:movieId" element={<Movie />} />
-        <Route path="/Search" element={<Search search={search} />} />
+        <Route path="/Search/:movieName" element={<Search search={search} />} />
       </Routes>
     </div>
   );
