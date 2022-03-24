@@ -42,16 +42,22 @@ function App() {
 
   return (
     <div>
-      <Header
-        ChangeType={(type) => changeType(type)}
-        SearchMovie={(movie) => searchMovie(movie)}
-      ></Header>
+      <Header SearchMovie={(movie) => searchMovie(movie)}></Header>
       <Routes>
         <Route
           path="/"
-          element={<Home movies={movies} addPages={() => addPage()} />}
+          element={
+            <Home
+              movies={movies}
+              addPages={() => addPage()}
+              ChangeType={(type) => changeType(type)}
+            />
+          }
         />
-        <Route path="/Movie/:movieId" element={<Movie />} />
+        <Route
+          path="/Movie/:movieId"
+          element={<Movie ChangeType={(type) => changeType(type)} />}
+        />
         <Route path="/Search/:movieName" element={<Search search={search} />} />
       </Routes>
     </div>

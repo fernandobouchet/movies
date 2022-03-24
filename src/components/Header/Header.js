@@ -5,14 +5,9 @@ import { BsSearch } from "react-icons/bs";
 import { goToTop } from "../Utils/Functions";
 
 function Header(props) {
-  const { ChangeType, SearchMovie } = props;
+  const { SearchMovie } = props;
 
   let navigate = useNavigate();
-
-  function handleChange(e) {
-    goToTop();
-    ChangeType(e.target.value);
-  }
 
   function handleSearch(e) {
     e.preventDefault();
@@ -40,23 +35,6 @@ function Header(props) {
           <BsSearch />
         </SearchButton>
       </form>
-      <StyledRow>
-        {" "}
-        <StyledH2>Order By: </StyledH2>
-        <StyledSelect
-          name="movies"
-          id=""
-          onChange={(e) => {
-            handleChange(e);
-            navigate("/");
-          }}
-        >
-          <StyledOption value="popular">Popular</StyledOption>
-          <StyledOption value="upcoming">Upcoming</StyledOption>
-          <StyledOption value="top_rated">Top Rated</StyledOption>
-          <StyledOption value="now_playing">Now Playing</StyledOption>
-        </StyledSelect>
-      </StyledRow>
     </StyledHeader>
   );
 }
@@ -70,7 +48,6 @@ const StyledHeader = styled.header`
   justify-content: space-around;
   align-items: center;
   z-index: 1;
-  gap: 1rem;
 
   background-color: black;
   width: 100%;
@@ -80,6 +57,7 @@ const StyledHeader = styled.header`
 
   @media (max-width: 480px) {
     height: 4rem;
+    justify-content: space-between;
   }
 `;
 
@@ -96,19 +74,9 @@ const Title = styled.h1`
   font-size: 4rem;
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
     padding: 0.5rem;
-  }
-`;
-
-const StyledH2 = styled.h2`
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: white;
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
+    padding-left: 1rem;
   }
 `;
 
@@ -117,26 +85,8 @@ const StyledSpan = styled.span`
   font-size: 4rem;
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
-`;
-
-const StyledSelect = styled.select`
-  font-family: inherit;
-  font-size: 1.5rem;
-  width: 11rem;
-  background-color: black;
-  color: white;
-  border-style: none;
-
-  @media (max-width: 480px) {
-    font-size: 1rem;
-    width: 60px;
-  }
-`;
-
-const StyledOption = styled.option`
-  border-style: none;
 `;
 
 const StyledInput = styled.input`
@@ -145,10 +95,11 @@ const StyledInput = styled.input`
   height: 2.5rem;
   border-radius: 10px;
   color: white;
+
   @media (max-width: 480px) {
     height: 20px;
-    font-size: 1rem;
-    width: 80px;
+    font-size: 1.2rem;
+    width: 110px;
   }
 `;
 
@@ -167,11 +118,6 @@ const SearchButton = styled.button`
   }
 
   @media (max-width: 480px) {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
-`;
-
-const StyledRow = styled.div`
-  display: flex;
-  justify-content: center;
 `;
