@@ -5,6 +5,7 @@ import Spinner from "../Spinner/Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import { goToTop } from "../Utils/Functions";
+import Select from "react-select";
 
 function Home(props) {
   const { movies, addPages, ChangeType } = props;
@@ -13,8 +14,15 @@ function Home(props) {
 
   function handleChange(e) {
     goToTop();
-    ChangeType(e.target.value);
+    ChangeType(e.value);
   }
+
+  const options = [
+    { value: "popular", label: "Popular" },
+    { value: "upcoming", label: "Upcoming" },
+    { value: "top_rated", label: "Top Rated" },
+    { value: "now_playing", label: "Now Playing" },
+  ];
 
   const Movies = movies.map((movie) => {
     return <Cards key={nanoid()} movie={movie} />;
@@ -32,18 +40,44 @@ function Home(props) {
           <StyledRow>
             <StyledH2>Order By: </StyledH2>
             <StyledSelect
-              name="movies"
-              id=""
+              defaultValue={options[0]}
+              options={options}
+              styles={{
+                control: (styles) => ({
+                  ...styles,
+                  cursor: "pointer",
+                  background: "black",
+                  color: "white",
+                  border: 0,
+                }),
+                option: (styles) => ({
+                  ...styles,
+                  cursor: "pointer",
+                }),
+                menu: (styles) => ({
+                  ...styles,
+                  background: "black",
+                  color: "white",
+                }),
+                singleValue: (styles) => ({
+                  ...styles,
+                  border: 0,
+                  color: "white",
+                }),
+              }}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: "#242424",
+                  primary: "black",
+                },
+              })}
               onChange={(e) => {
                 handleChange(e);
                 navigate("/");
               }}
-            >
-              <StyledOption value="popular">Popular</StyledOption>
-              <StyledOption value="upcoming">Upcoming</StyledOption>
-              <StyledOption value="top_rated">Top Rated</StyledOption>
-              <StyledOption value="now_playing">Now Playing</StyledOption>
-            </StyledSelect>
+            />
           </StyledRow>
           <CardsContainer>{Movies}</CardsContainer>;
         </HomeContainer>
@@ -88,15 +122,17 @@ const CardsContainer = styled.div`
   }
 `;
 
-const StyledOption = styled.option`
-  border-style: none;
-`;
-
 const StyledH2 = styled.h2`
   margin: 0;
   font-size: 1.5rem;
   font-weight: 400;
   color: white;
+  line-height: 2.5;
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    line-height: 3;
+  }
 `;
 
 const StyledRow = styled.div`
@@ -105,20 +141,15 @@ const StyledRow = styled.div`
   padding: 1rem;
 
   @media (max-width: 480px) {
-    padding: 0.5rem;
+    padding: 0.1rem;
   }
 `;
 
-const StyledSelect = styled.select`
-  font-family: inherit;
+const StyledSelect = styled(Select)`
   font-size: 1.5rem;
-  width: 110px;
-  background-color: black;
-  color: white;
-  border-style: none;
-  border-radius: 10px;
+  width: 140px;
 
-  &:hover {
-    cursor: pointer;
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
   }
 `;

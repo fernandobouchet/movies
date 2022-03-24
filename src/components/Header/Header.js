@@ -92,9 +92,15 @@ const StyledSpan = styled.span`
 const StyledInput = styled.input`
   border-style: solid;
   background-color: inherit;
-  height: 2.5rem;
+  height: 25px;
   border-radius: 10px;
   color: white;
+  border-width: 0.1px;
+  border-style: solid;
+
+  &:focus {
+    outline-color: #242424;
+  }
 
   @media (max-width: 480px) {
     height: 20px;
