@@ -17,9 +17,12 @@ function App() {
 
   const [page, setPage] = useState(1);
 
+  const [hasMore, setHasMore] = useState(true);
+
   useEffect(() => {
     loadMovies(type, page).then((movies) => {
       setMovies((prevMovies) => prevMovies.concat(movies.results));
+      setHasMore(movies.page < movies.total_pages);
     });
   }, [type, page]);
 
@@ -51,6 +54,7 @@ function App() {
               movies={movies}
               addPages={() => addPage()}
               ChangeType={(type) => changeType(type)}
+              hasMore={hasMore}
             />
           }
         />

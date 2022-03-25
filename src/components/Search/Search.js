@@ -13,7 +13,9 @@ function Search(props) {
 
   const [page, setPage] = useState(1);
 
-  const [prevSearch, setPrevSearch] = useState("movie");
+  const [prevSearch, setPrevSearch] = useState(search);
+
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (prevSearch !== search) {
@@ -21,11 +23,11 @@ function Search(props) {
       setPage(1);
       setPrevSearch(search);
     }
-    (async () => {
-      const movies = await searchMovie(search, page);
-      setMovies((prevMovies) => prevMovies.concat(movies.results));
-    })();
-  }, [search, page, prevSearch]);
+    searchMovie(search, page).then((data) => {
+      setMovies((prevMovies) => prevMovies.concat(data.results));
+      setHasMore(data.page < data.total_pages);
+    });
+  }, [search, page]);
 
   function addPages() {
     setPage((prevPage) => prevPage + 1);
@@ -39,7 +41,7 @@ function Search(props) {
     <>
       <InfiniteScroll
         dataLength={movies.length}
-        hasMore={true}
+        hasMore={hasMore}
         next={addPages}
         loader={<Spinner />}
       >

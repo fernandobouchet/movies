@@ -8,7 +8,7 @@ import { goToTop } from "../Utils/Functions";
 import Select from "react-select";
 
 function Home(props) {
-  const { movies, addPages, ChangeType } = props;
+  const { movies, addPages, ChangeType, hasMore } = props;
 
   let navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function Home(props) {
     <>
       <InfiniteScroll
         dataLength={movies.length}
-        hasMore={true}
+        hasMore={hasMore}
         next={addPages}
         loader={<Spinner />}
       >
