@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import { goToTop } from "../Utils/Functions";
 import Select from "react-select";
+import GoToTopButton from "../Button/GoToTop/GoToTopButton";
 
 function Home(props) {
   const { movies, addPages, ChangeType, hasMore } = props;
@@ -79,6 +80,7 @@ function Home(props) {
               }}
             />
           </StyledRow>
+          <GoToTopButton></GoToTopButton>
           <CardsContainer>{Movies}</CardsContainer>;
         </HomeContainer>
       </InfiniteScroll>

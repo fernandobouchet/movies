@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../Spinner/Spinner";
+import GoToTopButton from "../Button/GoToTop/GoToTopButton";
 
 function Search(props) {
   const { search } = props;
@@ -46,6 +47,7 @@ function Search(props) {
         loader={<Spinner />}
       >
         <CardsContainer>{Movies}</CardsContainer>
+        <GoToTopButton />
       </InfiniteScroll>
     </>
   );
