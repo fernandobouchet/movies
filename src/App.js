@@ -5,6 +5,7 @@ import Home from "./components/Home/Home";
 import Movie from "./components/Movie/Movie";
 import Search from "./components/Search/Search";
 import { loadMovies } from "./components/Utils/Axios";
+import Favorites from "./components/Favorites/Favorites";
 
 function App() {
   const [type, setType] = useState("popular");
@@ -18,6 +19,8 @@ function App() {
   const [page, setPage] = useState(1);
 
   const [hasMore, setHasMore] = useState(true);
+
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     loadMovies(type, page).then((movies) => {
@@ -33,6 +36,13 @@ function App() {
       setType(type);
       setSavedType(type);
     }
+  }
+
+  function addFavoriteMovie(movie) {
+    if (!favorites.includes(movie))
+      setFavorites((prevMovies) => {
+        return [...prevMovies, movie];
+      });
   }
 
   function searchMovie(movie) {
@@ -60,9 +70,12 @@ function App() {
         />
         <Route
           path="/Movie/:movieId"
-          element={<Movie ChangeType={(type) => changeType(type)} />}
+          element={
+            <Movie addFavoriteMovie={(movie) => addFavoriteMovie(movie)} />
+          }
         />
         <Route path="/Search/:movieName" element={<Search search={search} />} />
+        <Route path="/Favorites" element={<Favorites favs={favorites} />} />
       </Routes>
     </div>
   );

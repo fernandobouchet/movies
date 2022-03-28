@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { goToTop } from "../Utils/Functions";
+import { BsBookmarkStar } from "react-icons/bs";
 
 function Header(props) {
   const { SearchMovie } = props;
@@ -24,6 +25,7 @@ function Header(props) {
           Movies <StyledSpan>+</StyledSpan>
         </StyledLink>
       </Title>
+
       <form
         action="submit"
         onSubmit={(e) => {
@@ -35,6 +37,12 @@ function Header(props) {
           <BsSearch />
         </SearchButton>
       </form>
+      <BsBookmarkStar
+        color="white"
+        size={25}
+        onClick={() => navigate("/Favorites")}
+        style={{ cursor: "pointer" }}
+      />
     </StyledHeader>
   );
 }
@@ -45,7 +53,7 @@ const StyledHeader = styled.header`
   position: fixed;
   overflow: hidden;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   z-index: 1;
 
@@ -57,7 +65,6 @@ const StyledHeader = styled.header`
 
   @media (max-width: 480px) {
     height: 4rem;
-    justify-content: space-between;
   }
 `;
 
@@ -93,6 +100,7 @@ const StyledInput = styled.input`
   border-style: solid;
   background-color: inherit;
   height: 25px;
+  width: 200px;
   border-radius: 10px;
   color: white;
   border-width: 0.1px;

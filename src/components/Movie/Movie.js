@@ -7,8 +7,9 @@ import { AiFillYoutube } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 import { genres } from "../Utils/Genres";
+import { BsBookmarkPlus } from "react-icons/bs";
 
-function Movie() {
+function Movie(props) {
   const movie = useLocation();
   const {
     title,
@@ -20,6 +21,8 @@ function Movie() {
     id,
     genre_ids,
   } = movie.state;
+
+  const { addFavoriteMovie } = props;
 
   const [videoId, setVideoId] = useState("");
 
@@ -103,6 +106,14 @@ function Movie() {
               <ButtonsContainer>
                 <Button onClick={() => navigate(-1)}>
                   <BiArrowBack style={{ verticalAlign: "middle" }} /> Back
+                </Button>
+                <Button onClick={() => addFavoriteMovie(movie.state)}>
+                  Add To Favorites{" "}
+                  <BsBookmarkPlus
+                    color="white"
+                    size={20}
+                    style={{ verticalAlign: "middle" }}
+                  />
                 </Button>
                 {videoId && (
                   <Button>
@@ -264,6 +275,11 @@ const Button = styled.button`
   &:hover {
     opacity: 0.9;
   }
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+
+    padding: 2px 5px;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -271,6 +287,6 @@ const ButtonsContainer = styled.div`
   gap: 50px;
 
   @media (max-width: 480px) {
-    gap: 20px;
+    gap: 5px;
   }
 `;
