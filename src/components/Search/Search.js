@@ -6,6 +6,7 @@ import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../Spinner/Spinner";
 import GoToTopButton from "../Button/GoToTop/GoToTopButton";
+import { BsTypeH1 } from "react-icons/bs";
 
 function Search(props) {
   const { search } = props;
@@ -40,15 +41,21 @@ function Search(props) {
 
   return (
     <>
-      <InfiniteScroll
-        dataLength={movies.length}
-        hasMore={hasMore}
-        next={addPages}
-        loader={<Spinner />}
-      >
-        <CardsContainer>{Movies}</CardsContainer>
-        <GoToTopButton />
-      </InfiniteScroll>
+      {movies.length > 1 ? (
+        <InfiniteScroll
+          dataLength={movies.length}
+          hasMore={hasMore}
+          next={addPages}
+          loader={<Spinner />}
+        >
+          <CardsContainer>{Movies}</CardsContainer>
+          <GoToTopButton />
+        </InfiniteScroll>
+      ) : (
+        <MessageContainer>
+          <StyledH2>No results found...</StyledH2>
+        </MessageContainer>
+      )}
     </>
   );
 }
@@ -66,5 +73,21 @@ const CardsContainer = styled.div`
   @media (max-width: 480px) {
     padding-top: 5rem;
     grid-template-columns: repeat(2, 16rem);
+  }
+`;
+
+const MessageContainer = styled.div`
+  padding-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledH2 = styled.h2`
+  font-size: 3rem;
+  color: white;
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
   }
 `;
