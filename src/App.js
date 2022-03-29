@@ -6,6 +6,10 @@ import Movie from "./components/Movie/Movie";
 import Search from "./components/Search/Search";
 import { loadMovies } from "./components/Utils/Axios";
 import Favorites from "./components/Favorites/Favorites";
+import {
+  saveMoviesToLocalStorage,
+  restoreMoviesFromLocalStorage,
+} from "./components/Utils/Functions";
 
 function App() {
   const [type, setType] = useState("popular");
@@ -20,7 +24,7 @@ function App() {
 
   const [hasMore, setHasMore] = useState(true);
 
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(restoreMoviesFromLocalStorage());
 
   useEffect(() => {
     loadMovies(type, page).then((movies) => {
@@ -28,6 +32,8 @@ function App() {
       setHasMore(movies.page < movies.total_pages);
     });
   }, [type, page]);
+
+  useEffect(() => saveMoviesToLocalStorage(favorites), [favorites]);
 
   function changeType(type) {
     if (savedType !== type) {
@@ -39,10 +45,11 @@ function App() {
   }
 
   function addFavoriteMovie(movie) {
-    if (!favorites.some((favorite) => favorite.id === movie.id))
+    if (!favorites.some((favorite) => favorite.id === movie.id)) {
       setFavorites((prevMovies) => {
         return [...prevMovies, movie];
       });
+    }
   }
 
   function removeFavoriteMovie(movie) {

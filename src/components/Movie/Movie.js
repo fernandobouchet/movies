@@ -32,8 +32,6 @@ function Movie(props) {
 
   const [itsFavorite, setItsFavorite] = useState(false);
 
-  console.log(itsFavorite);
-
   let navigate = useNavigate();
 
   useEffect(() => {
