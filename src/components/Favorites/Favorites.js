@@ -2,7 +2,6 @@ import Cards from "../Cards/Cards";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 import GoToTopButton from "../Button/GoToTop/GoToTopButton";
-import { BsTypeH1 } from "react-icons/bs";
 
 function Favorites(props) {
   const { favs } = props;

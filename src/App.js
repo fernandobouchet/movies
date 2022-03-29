@@ -39,12 +39,13 @@ function App() {
   }
 
   function addFavoriteMovie(movie) {
-    if (!favorites.includes(movie))
+    if (!favorites.some((favorite) => favorite.id === movie.id))
       setFavorites((prevMovies) => {
         return [...prevMovies, movie];
       });
   }
 
+  console.log(favorites);
   function searchMovie(movie) {
     setSearch(movie);
   }
