@@ -37,12 +37,7 @@ function Header(props) {
           <BsSearch />
         </SearchButton>
       </form>
-      <BsBookmarkStar
-        color="white"
-        size={25}
-        onClick={() => navigate("/Favorites")}
-        style={{ cursor: "pointer" }}
-      />
+      <StyledBsBookmarkStar onClick={() => navigate("/Favorites")} />
     </StyledHeader>
   );
 }
@@ -84,6 +79,15 @@ const Title = styled.h1`
     font-size: 2.5rem;
     padding: 0.5rem;
     padding-left: 1rem;
+  }
+`;
+
+const StyledBsBookmarkStar = styled(BsBookmarkStar)`
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  @media (max-width: 480px) {
+    font-size: 20px;
   }
 `;
 

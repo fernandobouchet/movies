@@ -49,5 +49,10 @@ const MessageContainer = styled.div`
 `;
 
 const StyledH2 = styled.h2`
+  font-size: 3rem;
   color: white;
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 `;

@@ -45,7 +45,12 @@ function App() {
       });
   }
 
-  console.log(favorites);
+  function removeFavoriteMovie(movie) {
+    setFavorites((prevMovies) => {
+      return [...prevMovies.filter((favorite) => favorite.id !== movie.id)];
+    });
+  }
+
   function searchMovie(movie) {
     setSearch(movie);
   }
@@ -72,7 +77,11 @@ function App() {
         <Route
           path="/Movie/:movieId"
           element={
-            <Movie addFavoriteMovie={(movie) => addFavoriteMovie(movie)} />
+            <Movie
+              addFavoriteMovie={(movie) => addFavoriteMovie(movie)}
+              removeFavoriteMovie={(movie) => removeFavoriteMovie(movie)}
+              favorites={favorites}
+            />
           }
         />
         <Route path="/Search/:movieName" element={<Search search={search} />} />

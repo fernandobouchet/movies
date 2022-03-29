@@ -7,7 +7,7 @@ import { AiFillYoutube } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 import { genres } from "../Utils/Genres";
-import { BsBookmarkPlus } from "react-icons/bs";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 function Movie(props) {
   const movie = useLocation();
@@ -22,13 +22,17 @@ function Movie(props) {
     genre_ids,
   } = movie.state;
 
-  const { addFavoriteMovie } = props;
+  const { addFavoriteMovie, removeFavoriteMovie, favorites } = props;
 
   const [videoId, setVideoId] = useState("");
 
   const [loading, setLoading] = useState(true);
 
   const [credits, setCredits] = useState([]);
+
+  const [itsFavorite, setItsFavorite] = useState(false);
+
+  console.log(itsFavorite);
 
   let navigate = useNavigate();
 
@@ -57,8 +61,15 @@ function Movie(props) {
     return videoKey;
   }
 
+  function checkFovorite(movie) {
+    if (favorites.some((favorite) => favorite.id === movie.id)) {
+      setItsFavorite((prevState) => !prevState);
+    }
+  }
+
   useEffect(() => {
     setLoading(true);
+    checkFovorite(movie.state);
     getVideo(id).then((videos) => {
       setVideoId(findVideoKey(videos));
       setTimeout(() => setLoading(false), 500);
@@ -107,14 +118,35 @@ function Movie(props) {
                 <Button onClick={() => navigate(-1)}>
                   <BiArrowBack style={{ verticalAlign: "middle" }} /> Back
                 </Button>
-                <Button onClick={() => addFavoriteMovie(movie.state)}>
-                  Add To Favorites{" "}
-                  <BsBookmarkPlus
-                    color="white"
-                    size={20}
-                    style={{ verticalAlign: "middle" }}
-                  />
-                </Button>
+                {itsFavorite ? (
+                  <Button
+                    onClick={() => {
+                      removeFavoriteMovie(movie.state);
+                      setItsFavorite((prevState) => !prevState);
+                    }}
+                  >
+                    Unstar{" "}
+                    <AiOutlineStar
+                      color="white"
+                      size={20}
+                      style={{ verticalAlign: "middle" }}
+                    />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      addFavoriteMovie(movie.state);
+                      setItsFavorite((prevState) => !prevState);
+                    }}
+                  >
+                    Star{" "}
+                    <AiFillStar
+                      color="white"
+                      size={20}
+                      style={{ verticalAlign: "middle" }}
+                    />
+                  </Button>
+                )}
                 {videoId && (
                   <Button>
                     <StyledA
@@ -187,6 +219,7 @@ const ContainerCol = styled.div`
     font-size: 3rem;
     justify-content: center;
     margin: 10px;
+    padding: 30px 5px;
   }
 `;
 
@@ -278,7 +311,7 @@ const Button = styled.button`
   @media (max-width: 480px) {
     font-size: 1.3rem;
 
-    padding: 2px 5px;
+    padding: 5px 10px;
   }
 `;
 
@@ -287,6 +320,6 @@ const ButtonsContainer = styled.div`
   gap: 50px;
 
   @media (max-width: 480px) {
-    gap: 5px;
+    gap: 10px;
   }
 `;
