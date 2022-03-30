@@ -114,7 +114,8 @@ function Movie(props) {
               </ContainerRow>
               <ButtonsContainer>
                 <Button onClick={() => navigate(-1)}>
-                  <BiArrowBack style={{ verticalAlign: "middle" }} /> Back
+                  <BiArrowBack size={20} style={{ verticalAlign: "middle" }} />{" "}
+                  Back
                 </Button>
                 {itsFavorite ? (
                   <Button
@@ -302,6 +303,7 @@ const Button = styled.button`
   border-radius: 10px;
   text-align: center;
   vertical-align: middle;
+  line-height: 0px;
 
   &:hover {
     opacity: 0.9;
